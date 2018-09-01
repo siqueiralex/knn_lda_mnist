@@ -22,6 +22,11 @@ def print_report(predictions, targets):
 
     print(confusion_matrix)
     print(hit_rate)    
+    sum = 0
+    for i in range(0,10):
+    	sum += hit_rate[i]
+
+    print("hit_rate mean: ", sum/10)
     #print(classification_report(targets, predictions)) 
 
 path = os.path.join("datasets", "mnist")
@@ -33,13 +38,26 @@ test_images, test_labels = mndata.load_testing()
 #test_images = test_images[:1000]
 #test_labels = test_labels.tolist()[:1000]
 
-k = 3
+
+k = 2
 knn = KNeighborsClassifier(n_neighbors=k, n_jobs=-1)
 knn.fit(images, labels.tolist())
 predictions = knn.predict(test_images)
 
-print("KNN k=3")
+print("KNN k=2")
 print_report(predictions, test_labels)
+print()
+
+knn.n_neighbors=3
+predictions = knn.predict(test_images)
+print("KNN k=3")
+print_report(predictions, test_labels)    
+print()
+
+knn.n_neighbors=4
+predictions = knn.predict(test_images)
+print("KNN k=4")
+print_report(predictions, test_labels)    
 print()
 
 knn.n_neighbors=5
@@ -48,10 +66,15 @@ print("KNN k=5")
 print_report(predictions, test_labels)    
 print()
 
-
 knn.n_neighbors=10
 predictions = knn.predict(test_images)
 print("KNN k=10")
+print_report(predictions, test_labels)    
+print()
+
+knn.n_neighbors=20
+predictions = knn.predict(test_images)
+print("KNN k=20")
 print_report(predictions, test_labels)    
 print()
 
